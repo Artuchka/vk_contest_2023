@@ -17,12 +17,11 @@ export const Cell: FC<CellType> = (props) => {
 
 	const handleOpen = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
-		if (status === "marked" || gameStatus === "over") return
+		if (status === "marked") return
 		dispatch(openCell({ x, y }))
 	}
 	const handleMark = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
-		if (gameStatus === "over") return
 		dispatch(markCell({ x, y }))
 	}
 

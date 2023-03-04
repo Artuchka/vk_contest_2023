@@ -74,6 +74,10 @@ export const gameSlice = createSlice({
 		},
 
 		openCell(state, action: PayloadAction<{ x: number; y: number }>) {
+			if (state.gameStatus === "over" || state.gameStatus === "win") {
+				return state
+			}
+
 			const { x, y } = action.payload
 
 			const clickedOnMine = isMine(state.board, { x, y })
@@ -114,6 +118,10 @@ export const gameSlice = createSlice({
 		},
 
 		markCell(state, action: PayloadAction<{ x: number; y: number }>) {
+			if (state.gameStatus === "over" || state.gameStatus === "win") {
+				return state
+			}
+
 			const position = action.payload
 			if (isQuestioned(state.board, position)) {
 				state.board = unmarkTile(state.board, position)
