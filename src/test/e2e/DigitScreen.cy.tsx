@@ -2,7 +2,7 @@ import React from "react"
 import { Digit } from "../../components/Digit/index"
 import { DigitScreen } from "../../components/DigitScreen"
 
-describe("<Digit />", () => {
+describe("<DigitScreen />", () => {
 	it("number = 0", () => {
 		cy.mount(<DigitScreen number={0} />)
 		cy.get("[data-cy=digitScreen]")
