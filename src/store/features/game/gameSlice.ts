@@ -5,6 +5,7 @@ import { Board, Position, TileStatus } from "../../../types/game"
 import { createTiles } from "../../../utils/gameLogic/createTiles"
 import { createMines } from "../../../utils/gameLogic/createMines"
 import { openTile } from "../../../utils/gameLogic/openTile"
+import { isMine } from "../../../utils/gameLogic/position/positionCheckers"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
 	HIDDEN: "hidden",
@@ -63,6 +64,24 @@ export const gameSlice = createSlice({
 
 		openCell(state, action: PayloadAction<{ x: number; y: number }>) {
 			const { x, y } = action.payload
+
+			const clickedOnMine = isMine(state.board, { x, y })
+			const isFirstClick = state.openedCells.length === 0
+
+			if (isFirstClick && clickedOnMine) {
+				let board = []
+
+				board = createTiles(state.boardSize)
+				board = createMines(board, state.boardSize, state.minesLeft, [
+					{ x, y },
+				])
+
+				state.board = board
+			} else if (clickedOnMine) {
+				// state.board = openAllTiles(state.board)
+				// state.gameStatus = "over"
+				// return state
+			}
 
 			const board = openTile(state.board, { x, y }, state.boardSize)
 			state.board = board
