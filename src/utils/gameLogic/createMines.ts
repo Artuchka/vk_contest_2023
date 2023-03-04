@@ -19,17 +19,16 @@ export function createMines(
 		// minus 1 because array `board` indexes start from 0 =)
 		const x = randomNumber(boardSize - 1)
 		const y = randomNumber(boardSize - 1)
-
 		const position = { x, y }
+
 		const isUniquePosition = !minesPositions.some((el) =>
 			positionSame(el, position)
 		)
+		const shouldBeExcludedMined = excludePositions?.some((item) =>
+			positionSame(item, position)
+		)
 
-		if (
-			!isUniquePosition ||
-			((excludePositions?.length || 0) >= 1 &&
-				excludePositions?.includes(position))
-		) {
+		if (!isUniquePosition || shouldBeExcludedMined) {
 			continue
 		}
 		minesPositions = addElement(minesPositions, position)
