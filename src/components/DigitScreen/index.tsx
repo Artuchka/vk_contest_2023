@@ -1,12 +1,14 @@
-import React, { FC } from "react"
+import React, { FC, memo } from "react"
 import style from "./style.module.scss"
 import { useSelector } from "react-redux"
 import { selectGame } from "../../store/features/game/gameSlice"
 import { getDigits } from "../../utils/formatNumber"
 import { Digit } from "../Digit"
 
-export const DigitScreen: FC<{ number: number }> = ({ number }) => {
-	const digits = getDigits(number % 1000)
+type PropType = { number: string }
+
+export const DigitScreen: FC<PropType> = memo(({ number }) => {
+	const digits = getDigits(parseInt(number) % 1000)
 
 	return (
 		<div className={style.wrapper} data-cy="digitScreen">
@@ -15,4 +17,11 @@ export const DigitScreen: FC<{ number: number }> = ({ number }) => {
 			<Digit number={digits[2]} />
 		</div>
 	)
+}, digitScreenPropsAreEqual)
+
+function digitScreenPropsAreEqual(
+	prevdigitScreen: PropType,
+	nextdigitScreen: PropType
+) {
+	return prevdigitScreen.number === nextdigitScreen.number
 }
