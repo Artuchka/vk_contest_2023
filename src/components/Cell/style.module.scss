@@ -46,6 +46,12 @@
 	&.marked {
 		background-image: url("./../../assets/images/hidden_cell_marked.png");
 	}
+	&.question {
+		background-image: url("./../../assets/images/question.png");
+		&:active {
+			background-image: url("./../../assets/images/question_clicked.png");
+		}
+	}
 	&.mine {
 		background-image: url("./../../assets/images/mines/mine_gray.png");
 		&.clicked {

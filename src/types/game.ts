@@ -1,4 +1,4 @@
-export type TileStatus = "hidden" | "opened" | "marked" | "mine"
+export type TileStatus = "hidden" | "opened" | "marked" | "mine" | "question"
 
 export type Cell = {
 	id: string

@@ -26,9 +26,6 @@ export const Cell: FC<CellType> = (props) => {
 	}
 
 	const isMarked = markedCells.some((item) => positionSame(item, { x, y }))
-	if (isMarked) {
-		console.log({ x, y })
-	}
 
 	return (
 		<div
@@ -49,6 +46,7 @@ export const Cell: FC<CellType> = (props) => {
 			}
 			${status === "mine" && isMarked ? style.saved : ""}
 			${status === "marked" ? style.marked : ""}
+			${status === "question" ? style.question : ""}
 
 			`}
 			onClick={handleOpen}

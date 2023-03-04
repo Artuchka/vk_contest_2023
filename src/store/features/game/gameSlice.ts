@@ -9,17 +9,20 @@ import {
 	isMarked,
 	isMine,
 	isOpened,
+	isQuestioned,
 } from "../../../utils/gameLogic/position/positionCheckers"
 import { openAllTiles } from "../../../utils/gameLogic/openAllTiles"
 import { unmarkTile } from "../../../utils/gameLogic/mark/unmarkTiles"
 import { markTile } from "../../../utils/gameLogic/mark/markTile"
 import { positionSame } from "../../../utils/gameLogic/position/positionSame"
+import { questionTile } from "../../../utils/gameLogic/mark/questionTile"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
 	HIDDEN: "hidden",
 	OPENED: "opened",
 	MARKED: "marked",
 	MINE: "mine",
+	QUESTIONED: "question",
 }
 
 export const MINE_FLAG = 999
@@ -114,11 +117,15 @@ export const gameSlice = createSlice({
 
 		markCell(state, action: PayloadAction<{ x: number; y: number }>) {
 			const position = action.payload
-			if (isMarked(state.board, position)) {
+			if (isQuestioned(state.board, position)) {
 				state.board = unmarkTile(state.board, position)
 				state.markedCells = state.markedCells.filter(
 					(item) => !positionSame(item, position)
 				)
+			} else if (isMarked(state.board, position)) {
+				console.log("doing quest")
+
+				state.board = questionTile(state.board, position)
 			} else if (!isOpened(state.board, position)) {
 				state.board = markTile(state.board, position)
 				state.markedCells.push(position)
