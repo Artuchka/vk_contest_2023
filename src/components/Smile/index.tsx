@@ -5,7 +5,7 @@ import { restartGame, selectGame } from "../../store/features/game/gameSlice"
 import { useAppDispatch } from "../../store/store"
 
 export const Smile = () => {
-	const { gameStatus } = useSelector(selectGame)
+	const { gameStatus, holdingCell } = useSelector(selectGame)
 	const dispatch = useAppDispatch()
 
 	const handleRestart = () => {
@@ -15,8 +15,19 @@ export const Smile = () => {
 		<div
 			className={`
 		${style.wrapper}
+		${
+			(gameStatus === "playing" || gameStatus === "idle") &&
+			holdingCell !== null
+				? style.holdingCell
+				: ""
+		}
+		${
+			(gameStatus === "playing" || gameStatus === "idle") &&
+			holdingCell === null
+				? style.idle
+				: ""
+		}
 		${gameStatus === "over" ? style.over : ""}
-		${gameStatus === "idle" ? style.idle : ""}
 		${gameStatus === "win" ? style.win : ""}
 	`}
 			onClick={handleRestart}
