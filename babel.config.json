@@ -1,10 +1,12 @@
 {
   "env": {
     "production": {
-      "plugins": ["babel-plugin-jsx-remove-data-test-id", 
-      {
-       " attributes": ["data-testid"]
-      }]
+      "plugins": [
+        "babel-plugin-jsx-remove-data-test-id", 
+        {
+        "attributes": ["data-testid", "data-cy"]
+        }
+    ]
     }
   }
 }
