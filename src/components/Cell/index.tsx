@@ -22,6 +22,7 @@ export const Cell: FC<CellType> = (props) => {
 		// i think there should be click possible on  `status ==='question'`
 		if (status === "marked") return
 
+		// only if left-button mouse clicked
 		if (e.button === 0) {
 			dispatch(onCellMouseDown({ x, y }))
 		}

@@ -11,7 +11,7 @@ import { useAppDispatch } from "../../store/store"
 import { Header } from "../Header"
 
 export const Board = () => {
-	const { board, gameStatus, secondsPassed } = useSelector(selectGame)
+	const { board, gameStatus } = useSelector(selectGame)
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
@@ -27,24 +27,25 @@ export const Board = () => {
 		}, 1000)
 	}
 
+	const stopInterval = () => {
+		if (intervalref.current !== null) {
+			window.clearInterval(intervalref.current)
+			intervalref.current = null
+		}
+	}
+
 	// Use the useEffect hook to cleanup the interval when the component unmounts
 	useEffect(() => {
-		console.log({ gameStatus })
-
 		if (gameStatus === "playing") {
 			startInterval()
 		}
 
-		// here's the cleanup function
-		return () => {
-			if (intervalref.current !== null) {
-				window.clearInterval(intervalref.current)
-				intervalref.current = null
-			}
-		}
+		// cleanup function
+		return stopInterval
 	}, [gameStatus])
 
 	return (
+		// this many wrappers only for borders
 		<div className={style.outerWrapper}>
 			<div className={style.middleWrapper}>
 				<div className={`${style.innerWrapper}`}>

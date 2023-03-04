@@ -43,7 +43,6 @@ interface GameState {
 	holdingCell: Position | null
 }
 
-// Define the initial state using that type
 const initialState: GameState = {
 	board: [],
 	boardSize: 0,
@@ -57,7 +56,6 @@ const initialState: GameState = {
 
 export const gameSlice = createSlice({
 	name: "game",
-	// `createSlice` will infer the state type from the `initialState` argument
 	initialState,
 	reducers: {
 		createBoard(
@@ -102,10 +100,12 @@ export const gameSlice = createSlice({
 		restartGame(state) {
 			let board = []
 
+			// creating new mined board
 			board = createTiles(state.boardSize)
 			board = createMines(board, state.boardSize, state.minesLeft)
 
 			state.board = board
+			// resetting all statistic values
 			state.gameStatus = "idle"
 			state.secondsPassed = 0
 			state.openedCells = []
@@ -129,27 +129,27 @@ export const gameSlice = createSlice({
 			if (state.gameStatus === "over" || state.gameStatus === "win") {
 				return state
 			}
+
+			// will result if haven't held cell OR mouse lifted up on cell other than one which was held first time
 			if (
 				!(
 					state.holdingCell &&
 					positionSame(state.holdingCell, action.payload)
 				)
 			) {
-				// havent held cell OR mouse upped on other cell than one which was held
 				state.holdingCell = null
 				return state
 			}
 
 			state.holdingCell = null
 
-			// opening cell
+			// opening cell down there
 			state.gameStatus = "playing"
 
 			const position = action.payload
 
 			const clickedOnMine = isMine(state.board, position)
 			const isFirstClick = state.openedCells.length === 0
-			console.log({ isFirstClick, clickedOnMine })
 
 			if (isFirstClick && clickedOnMine) {
 				let board = []
@@ -161,7 +161,6 @@ export const gameSlice = createSlice({
 
 				state.board = board
 			} else if (!isFirstClick && clickedOnMine) {
-				// state.board = openAllTiles(state.board)
 				state.board = openAllMines(state.board)
 				state.openedCells.push(position)
 				state.gameStatus = "over"

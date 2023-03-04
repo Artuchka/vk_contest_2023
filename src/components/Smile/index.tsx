@@ -14,22 +14,22 @@ export const Smile = () => {
 	return (
 		<div
 			className={`
-		${style.wrapper}
-		${
-			(gameStatus === "playing" || gameStatus === "idle") &&
-			holdingCell !== null
-				? style.holdingCell
-				: ""
-		}
-		${
-			(gameStatus === "playing" || gameStatus === "idle") &&
-			holdingCell === null
-				? style.idle
-				: ""
-		}
-		${gameStatus === "over" ? style.over : ""}
-		${gameStatus === "win" ? style.win : ""}
-	`}
+				${style.wrapper}
+				${
+					(gameStatus === "playing" || gameStatus === "idle") &&
+					holdingCell !== null
+						? style.holdingCell
+						: ""
+				}
+				${
+					(gameStatus === "playing" || gameStatus === "idle") &&
+					holdingCell === null
+						? style.idle
+						: ""
+				}
+				${gameStatus === "over" ? style.over : ""}
+				${gameStatus === "win" ? style.win : ""}
+			`}
 			onClick={handleRestart}
 			data-testid={`smile_${gameStatus}`}
 		></div>

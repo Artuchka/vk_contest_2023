@@ -5,10 +5,9 @@ export const Digit: FC<{ number: number | string }> = ({ number }) => {
 	return (
 		<div
 			className={`
-    ${style.wrapper}
-    ${style[`image${number}`]}
-
-    `}
+				${style.wrapper}
+				${style[`image${number}`]}
+			`}
 		></div>
 	)
 }
