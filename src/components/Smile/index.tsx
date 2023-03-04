@@ -1,12 +1,16 @@
 import React from "react"
 import style from "./style.module.scss"
 import { useSelector } from "react-redux"
-import { selectGame } from "../../store/features/game/gameSlice"
+import { restartGame, selectGame } from "../../store/features/game/gameSlice"
+import { useAppDispatch } from "../../store/store"
 
 export const Smile = () => {
 	const { gameStatus } = useSelector(selectGame)
+	const dispatch = useAppDispatch()
 
-	const handleRestart = () => {}
+	const handleRestart = () => {
+		dispatch(restartGame())
+	}
 	return (
 		<div
 			className={`

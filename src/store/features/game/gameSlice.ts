@@ -140,13 +140,27 @@ export const gameSlice = createSlice({
 			}
 		},
 
+		restartGame(state) {
+			let board = []
+
+			board = createTiles(state.boardSize)
+			board = createMines(board, state.boardSize, state.minesLeft)
+
+			state.board = board
+			state.gameStatus = "idle"
+			state.secondsPassed = 0
+			state.openedCells = []
+			state.markedCells = []
+		},
+
 		addSecond(state) {
 			state.secondsPassed += 1
 		},
 	},
 })
 
-export const { createBoard, openCell, markCell, addSecond } = gameSlice.actions
+export const { createBoard, openCell, markCell, addSecond, restartGame } =
+	gameSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectGame = (state: RootState) => state.game
