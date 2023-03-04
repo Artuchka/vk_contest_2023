@@ -16,11 +16,6 @@ export const Cell: FC<CellType> = (props) => {
 	const { openedCells, markedCells, gameStatus } = useSelector(selectGame)
 	const dispatch = useAppDispatch()
 
-	// const handleOpen = (e: MouseEvent<HTMLDivElement>) => {
-	// 	e.preventDefault()
-	// 	if (status === "marked") return
-	// 	dispatch(openCell({ x, y }))
-	// }
 	const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
 
@@ -66,7 +61,6 @@ export const Cell: FC<CellType> = (props) => {
 			${status === "question" ? style.question : ""}
 
 			`}
-			// onClick={handleOpen}
 			onMouseDown={handleMouseDown}
 			onMouseUp={handleMouseUp}
 			onContextMenu={handleMark}

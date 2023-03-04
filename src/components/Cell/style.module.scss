@@ -8,6 +8,7 @@
 	background-size: contain;
 
 	&.hidden {
+		cursor: pointer;
 		background-image: url("./../../assets/images/hidden_cell.png");
 		&:active {
 			background-image: url("./../../assets/images/hidden_cell_clicked.png");
@@ -44,9 +45,11 @@
 		}
 	}
 	&.marked {
+		cursor: pointer;
 		background-image: url("./../../assets/images/hidden_cell_marked.png");
 	}
 	&.question {
+		cursor: pointer;
 		background-image: url("./../../assets/images/question.png");
 		&:active {
 			background-image: url("./../../assets/images/question_clicked.png");
