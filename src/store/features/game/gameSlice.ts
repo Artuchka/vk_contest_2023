@@ -6,6 +6,7 @@ import { createTiles } from "../../../utils/gameLogic/createTiles"
 import { createMines } from "../../../utils/gameLogic/createMines"
 import { openAdjacentTiles } from "../../../utils/gameLogic/openTile"
 import { isMine } from "../../../utils/gameLogic/position/positionCheckers"
+import { openAllTiles } from "../../../utils/gameLogic/openAllTiles"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
 	HIDDEN: "hidden",
@@ -67,6 +68,7 @@ export const gameSlice = createSlice({
 
 			const clickedOnMine = isMine(state.board, { x, y })
 			const isFirstClick = state.openedCells.length === 0
+			console.log({ isFirstClick, clickedOnMine })
 
 			if (isFirstClick && clickedOnMine) {
 				let board = []
@@ -78,9 +80,9 @@ export const gameSlice = createSlice({
 
 				state.board = board
 			} else if (!isFirstClick && clickedOnMine) {
-				// state.board = openAllTiles(state.board)
-				// state.gameStatus = "over"
-				// return state
+				state.board = openAllTiles(state.board)
+				state.gameStatus = "over"
+				return state
 			}
 
 			const board = openAdjacentTiles(
