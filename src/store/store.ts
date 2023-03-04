@@ -2,10 +2,16 @@ import { configureStore } from "@reduxjs/toolkit"
 import gameReducer from "./features/game/gameSlice"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 
+let opt = { devTools: true }
+if (process.env.NODE_ENV === "production") {
+	opt.devTools = false
+}
+
 export const store = configureStore({
 	reducer: {
 		game: gameReducer,
 	},
+	...opt,
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
