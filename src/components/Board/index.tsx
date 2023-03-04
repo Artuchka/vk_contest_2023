@@ -9,13 +9,15 @@ import {
 import { Cell } from "../Cell"
 import { useAppDispatch } from "../../store/store"
 import { Header } from "../Header"
+import { positionSame } from "../../utils/gameLogic/position/positionSame"
 
 export const Board = () => {
-	const { board, gameStatus } = useSelector(selectGame)
+	const { board, gameStatus, openedCells, markedCells } =
+		useSelector(selectGame)
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		dispatch(createBoard({ boardSize: 16, minesLeft: 40 }))
+		dispatch(createBoard({ boardSize: 16, minesLeft: 200 }))
 	}, [])
 
 	const intervalref = useRef<number | null>(null)
@@ -36,6 +38,10 @@ export const Board = () => {
 
 	// Use the useEffect hook to cleanup the interval when the component unmounts
 	useEffect(() => {
+		if (gameStatus === "over") {
+			console.log({ gameStatus })
+			console.log({ board })
+		}
 		if (gameStatus === "playing") {
 			startInterval()
 		}

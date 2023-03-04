@@ -6,6 +6,8 @@ export type Cell = {
 	y: number
 	adjacentMinesCount: number
 	status: TileStatus
+	isMarked?: boolean
+	wasLastOpened?: boolean
 }
 
 export type Board = Cell[][]

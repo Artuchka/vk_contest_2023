@@ -151,24 +151,42 @@ export const gameSlice = createSlice({
 			const clickedOnMine = isMine(state.board, position)
 			const isFirstClick = state.openedCells.length === 0
 
+			console.log({ clickedOnMine, isFirstClick })
+			let newBoard: Board = []
+
 			if (isFirstClick && clickedOnMine) {
-				let board = []
+				newBoard = createTiles(state.boardSize)
+				newBoard = createMines(
+					newBoard,
+					state.boardSize,
+					state.minesLeft,
+					[position]
+				)
 
-				board = createTiles(state.boardSize)
-				board = createMines(board, state.boardSize, state.minesLeft, [
+				console.log({ recreatedBoard: newBoard })
+
+				const board = openAdjacentTiles(
+					state.board,
 					position,
-				])
-
+					state.boardSize
+				)
 				state.board = board
+				state.openedCells.push(position)
+
+				if (isWin(state.board, state.boardSize, state.minesLeft)) {
+					state.gameStatus = "win"
+				}
+				return state
 			} else if (!isFirstClick && clickedOnMine) {
 				state.board = openAllMines(state.board)
+				state.board[position.y][position.x].wasLastOpened = true
 				state.openedCells.push(position)
 				state.gameStatus = "over"
 				return state
 			}
 
 			const board = openAdjacentTiles(
-				state.board,
+				newBoard.length === 0 ? state.board : newBoard,
 				position,
 				state.boardSize
 			)

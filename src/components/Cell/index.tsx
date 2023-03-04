@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from "react"
+import React, { FC, MouseEvent, memo } from "react"
 import style from "./style.module.scss"
 import { useSelector } from "react-redux"
 import {
@@ -11,10 +11,12 @@ import { Cell as CellType } from "../../types/game"
 import { useAppDispatch } from "../../store/store"
 import { positionSame } from "../../utils/gameLogic/position/positionSame"
 
-export const Cell: FC<CellType> = (props) => {
-	const { id, x, y, adjacentMinesCount, status } = props
-	const { openedCells, markedCells, gameStatus } = useSelector(selectGame)
+export const Cell: FC<CellType> = memo((props) => {
+	const { id, x, y, adjacentMinesCount, status, wasLastOpened, isMarked } =
+		props
 	const dispatch = useAppDispatch()
+
+	console.log({ id })
 
 	const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
@@ -41,8 +43,6 @@ export const Cell: FC<CellType> = (props) => {
 		dispatch(markCell({ x, y }))
 	}
 
-	const isMarked = markedCells.some((item) => positionSame(item, { x, y }))
-
 	return (
 		<div
 			className={`${style.wrapper} 
@@ -55,12 +55,7 @@ export const Cell: FC<CellType> = (props) => {
 					: ""
 			}
 			${status === "mine" ? style.mine : ""}
-			${
-				status === "mine" &&
-				positionSame(openedCells[openedCells.length - 1], { x, y })
-					? style.clicked
-					: ""
-			}
+			${status === "mine" && wasLastOpened ? style.clicked : ""}
 			${status === "mine" && isMarked ? style.saved : ""}
 			${status === "marked" ? style.marked : ""}
 			${status === "question" ? style.question : ""}
@@ -73,4 +68,8 @@ export const Cell: FC<CellType> = (props) => {
 			data-cy="cell"
 		></div>
 	)
+}, cellPropsAreEqual)
+
+function cellPropsAreEqual(prevCell: CellType, nextCell: CellType) {
+	return prevCell.status === nextCell.status
 }

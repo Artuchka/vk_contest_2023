@@ -11,6 +11,7 @@ export function markTile(board: Board, position: Position) {
 	const newTile = {
 		...newBoard[position.y][position.x],
 		status: TILE_STATUS.MARKED,
+		isMarked: true,
 	}
 
 	return replaceTile(newBoard, position, newTile)
