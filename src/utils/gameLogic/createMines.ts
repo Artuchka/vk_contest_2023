@@ -38,6 +38,7 @@ export function createMines(
 	minesPositions.forEach((pos) => {
 		newBoard = setMine(newBoard, pos)
 	})
+	console.log({ minesPositions })
 
 	return newBoard
 }

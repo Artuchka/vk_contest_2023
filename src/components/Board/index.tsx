@@ -15,7 +15,7 @@ export const Board = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		dispatch(createBoard({ boardSize: 5, minesLeft: 4 }))
+		dispatch(createBoard({ boardSize: 5, minesLeft: 18 }))
 	}, [])
 
 	const intervalref = useRef<number | null>(null)
@@ -29,6 +29,8 @@ export const Board = () => {
 
 	// Use the useEffect hook to cleanup the interval when the component unmounts
 	useEffect(() => {
+		console.log({ gameStatus })
+
 		if (gameStatus === "playing") {
 			startInterval()
 		}
@@ -37,6 +39,7 @@ export const Board = () => {
 		return () => {
 			if (intervalref.current !== null) {
 				window.clearInterval(intervalref.current)
+				intervalref.current = null
 			}
 		}
 	}, [gameStatus])

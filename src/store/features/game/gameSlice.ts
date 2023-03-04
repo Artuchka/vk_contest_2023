@@ -113,17 +113,20 @@ export const gameSlice = createSlice({
 			state.secondsPassed = 0
 			state.openedCells = []
 			state.markedCells = []
+			state.holdingCell = null
 		},
 
 		addSecond(state) {
 			state.secondsPassed += 1
 		},
+
 		onCellMouseDown(state, action: PayloadAction<Position>) {
 			if (state.gameStatus === "over" || state.gameStatus === "win") {
 				return state
 			}
 			state.holdingCell = action.payload
 		},
+
 		onCellMouseUp(state, action: PayloadAction<Position>) {
 			if (state.gameStatus === "over" || state.gameStatus === "win") {
 				return state
@@ -142,9 +145,9 @@ export const gameSlice = createSlice({
 			// opening cell
 			state.gameStatus = "playing"
 
-			const { x, y } = action.payload
+			const position = action.payload
 
-			const clickedOnMine = isMine(state.board, { x, y })
+			const clickedOnMine = isMine(state.board, position)
 			const isFirstClick = state.openedCells.length === 0
 			console.log({ isFirstClick, clickedOnMine })
 
@@ -153,25 +156,25 @@ export const gameSlice = createSlice({
 
 				board = createTiles(state.boardSize)
 				board = createMines(board, state.boardSize, state.minesLeft, [
-					{ x, y },
+					position,
 				])
 
 				state.board = board
 			} else if (!isFirstClick && clickedOnMine) {
 				// state.board = openAllTiles(state.board)
 				state.board = openAllMines(state.board)
-				state.openedCells.push({ x, y })
+				state.openedCells.push(position)
 				state.gameStatus = "over"
 				return state
 			}
 
 			const board = openAdjacentTiles(
 				state.board,
-				{ x, y },
+				position,
 				state.boardSize
 			)
 			state.board = board
-			state.openedCells.push({ x, y })
+			state.openedCells.push(position)
 
 			if (isWin(state.board, state.boardSize, state.minesLeft)) {
 				state.gameStatus = "win"
