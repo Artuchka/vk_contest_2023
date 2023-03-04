@@ -10,9 +10,9 @@ export const Header = () => {
 
 	return (
 		<div className={style.wrapper}>
-			<DigitScreen number={minesLeft - markedCells.length} />
+			<DigitScreen number={(minesLeft - markedCells.length).toString()} />
 			<Smile />
-			<DigitScreen number={secondsPassed} />
+			<DigitScreen number={secondsPassed.toString()} />
 		</div>
 	)
 }
