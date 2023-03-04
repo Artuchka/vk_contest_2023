@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "es5"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -15,8 +15,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "cypress", "node"]
   },
-  "include": ["src", "src/components/Header/.index.tsx"],
+  "include": ["src", "src/components/Header/.index.tsx",  "cypress.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

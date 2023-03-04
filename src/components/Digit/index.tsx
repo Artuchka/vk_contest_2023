@@ -8,6 +8,7 @@ export const Digit: FC<{ number: number | string }> = ({ number }) => {
 				${style.wrapper}
 				${style[`image${number}`]}
 			`}
+			data-cy={`digit`}
 		></div>
 	)
 }
