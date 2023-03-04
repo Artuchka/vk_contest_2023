@@ -23,16 +23,17 @@ export const Cell: FC<CellType> = (props) => {
 	// }
 	const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
-		console.log({ x, y })
-		console.log(e)
-		dispatch(onCellMouseDown({ x, y }))
+
+		if (e.button === 0) {
+			dispatch(onCellMouseDown({ x, y }))
+		}
 	}
 	const handleMouseUp = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
-		console.log(e)
-		console.log({ x, y })
 
-		dispatch(onCellMouseUp({ x, y }))
+		if (e.button === 0) {
+			dispatch(onCellMouseUp({ x, y }))
+		}
 	}
 
 	const handleMark = (e: MouseEvent<HTMLDivElement>) => {
