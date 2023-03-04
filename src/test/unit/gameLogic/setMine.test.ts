@@ -1,6 +1,6 @@
-import { MINE_FLAG, TILE_STATUS } from "../../store/features/game/gameSlice"
-import { Board } from "../../types/game"
-import { setMine } from "../../utils/gameLogic/boardTransform/createMines"
+import { MINE_FLAG, TILE_STATUS } from "../../../store/features/game/gameSlice"
+import { Board } from "../../../types/game"
+import { setMine } from "../../../utils/gameLogic/boardTransform/createMines"
 
 describe("#setMine", () => {
 	test("correctly sets mine", () => {

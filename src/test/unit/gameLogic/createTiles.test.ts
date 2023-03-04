@@ -1,6 +1,6 @@
-import { TILE_STATUS } from "../../store/features/game/gameSlice"
-import { Board } from "../../types/game"
-import { createTiles } from "../../utils/gameLogic/boardTransform/createTiles"
+import { TILE_STATUS } from "../../../store/features/game/gameSlice"
+import { Board } from "../../../types/game"
+import { createTiles } from "../../../utils/gameLogic/boardTransform/createTiles"
 
 describe("#createTiles", () => {
 	test("correctly sets up new clean board ", () => {

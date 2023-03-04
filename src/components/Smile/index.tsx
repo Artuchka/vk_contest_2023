@@ -31,6 +31,7 @@ export const Smile = () => {
 		${gameStatus === "win" ? style.win : ""}
 	`}
 			onClick={handleRestart}
+			data-testid={`smile_${gameStatus}`}
 		></div>
 	)
 }

@@ -15,7 +15,7 @@ export const Board = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		dispatch(createBoard({ boardSize: 5, minesLeft: 5 }))
+		dispatch(createBoard({ boardSize: 16, minesLeft: 40 }))
 	}, [])
 
 	const intervalref = useRef<number | null>(null)

@@ -64,6 +64,7 @@ export const Cell: FC<CellType> = (props) => {
 			onMouseDown={handleMouseDown}
 			onMouseUp={handleMouseUp}
 			onContextMenu={handleMark}
+			data-testid={`cell_${x}${y}`}
 		></div>
 	)
 }

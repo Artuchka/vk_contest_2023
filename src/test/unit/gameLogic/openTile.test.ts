@@ -1,7 +1,7 @@
-import { MINE_FLAG, TILE_STATUS } from "../../store/features/game/gameSlice"
-import { Board } from "../../types/game"
-import { openAllTiles } from "../../utils/gameLogic/boardTransform/openAllTiles"
-import { openAdjacentTiles } from "../../utils/gameLogic/boardTransform/openTile"
+import { MINE_FLAG, TILE_STATUS } from "../../../store/features/game/gameSlice"
+import { Board } from "../../../types/game"
+import { openAllTiles } from "../../../utils/gameLogic/boardTransform/openAllTiles"
+import { openAdjacentTiles } from "../../../utils/gameLogic/boardTransform/openTile"
 
 describe("#openAllTiles", () => {
 	test("correctly opens all tiles ", () => {

@@ -1,13 +1,11 @@
-import { MINE_FLAG, TILE_STATUS } from "../../store/features/game/gameSlice"
-import { Board } from "../../types/game"
-import {
-	isMarked,
-	isMine,
-	isOpened,
-} from "../../utils/gameLogic/position/positionCheckers"
+import { TILE_STATUS } from "../../../store/features/game/gameSlice"
+import { Board } from "../../../types/game"
+import { markTile } from "../../../utils/gameLogic/boardTransform/mark/markTile"
+import { unmarkTile } from "../../../utils/gameLogic/boardTransform/mark/unmarkTiles"
+import { isMarked } from "../../../utils/gameLogic/position/positionCheckers"
 
-describe("#isOpened", () => {
-	test("returns true when tile was opened", () => {
+describe("#unmarkTile", () => {
+	test("was questioned", () => {
 		// create board
 		const boardSize = 2
 		let board: Board = [
@@ -17,14 +15,14 @@ describe("#isOpened", () => {
 					x: 0,
 					y: 0,
 					adjacentMinesCount: 0,
-					status: TILE_STATUS.OPENED,
+					status: TILE_STATUS.HIDDEN,
 				},
 				{
 					id: "",
 					x: 1,
 					y: 0,
 					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
+					status: TILE_STATUS.QUESTIONED,
 				},
 			],
 			[
@@ -46,152 +44,16 @@ describe("#isOpened", () => {
 		]
 
 		// position for checking
-		const position = { x: 0, y: 0 }
+		const position = { x: 1, y: 0 }
 
-		// check the tile is opened
-		expect(isOpened(board, position)).toBeTruthy()
+		// unmark tile
+		board = unmarkTile(board, position)
+
+		// check the tile is not marked
+		expect(isMarked(board, position)).toBeFalsy()
 	})
 
-	test("returns false when tile was not opened", () => {
-		// create board
-		const boardSize = 2
-		let board: Board = [
-			[
-				{
-					id: "",
-					x: 0,
-					y: 0,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-				{
-					id: "",
-					x: 1,
-					y: 0,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-			],
-			[
-				{
-					id: "",
-					x: 0,
-					y: 1,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-				{
-					id: "",
-					x: 1,
-					y: 1,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-			],
-		]
-
-		// position for checking
-		const position = { x: 0, y: 0 }
-
-		// check the tile is opened
-		expect(isOpened(board, position)).toBeFalsy()
-	})
-})
-
-describe("#isMine", () => {
-	test("returns true when tile is a mine", () => {
-		// create board
-		const boardSize = 2
-		let board: Board = [
-			[
-				{
-					id: "",
-					x: 0,
-					y: 0,
-					adjacentMinesCount: MINE_FLAG,
-					status: TILE_STATUS.HIDDEN,
-				},
-				{
-					id: "",
-					x: 1,
-					y: 0,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-			],
-			[
-				{
-					id: "",
-					x: 0,
-					y: 1,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-				{
-					id: "",
-					x: 1,
-					y: 1,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-			],
-		]
-
-		// position for checking
-		const position = { x: 0, y: 0 }
-
-		// check the tile is mine
-		expect(isMine(board, position)).toBeTruthy()
-	})
-
-	test("returns false when tile is not a mine", () => {
-		// create board
-		const boardSize = 2
-		let board: Board = [
-			[
-				{
-					id: "",
-					x: 0,
-					y: 0,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-				{
-					id: "",
-					x: 1,
-					y: 0,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-			],
-			[
-				{
-					id: "",
-					x: 0,
-					y: 1,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-				{
-					id: "",
-					x: 1,
-					y: 1,
-					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
-				},
-			],
-		]
-
-		// position for checking
-		const position = { x: 0, y: 0 }
-
-		// check the tile is mine
-		expect(isMine(board, position)).toBeFalsy()
-	})
-})
-
-describe("#isMarked", () => {
-	test("false when NOT marked", () => {
+	test("was NOT marked", () => {
 		// create board
 		const boardSize = 2
 		let board: Board = [
@@ -232,10 +94,16 @@ describe("#isMarked", () => {
 		// position for checking
 		const position = { x: 1, y: 0 }
 
-		// check the tile is marked
+		// unmark tile
+		board = unmarkTile(board, position)
+
+		// check the tile is still not marked
 		expect(isMarked(board, position)).toBeFalsy()
 	})
-	test("true when marked", () => {
+})
+
+describe("#markTile", () => {
+	test("was marked", () => {
 		// create board
 		const boardSize = 2
 		let board: Board = [
@@ -273,10 +141,131 @@ describe("#isMarked", () => {
 			],
 		]
 
+		const expectedBoard: Board = [
+			[
+				{
+					id: "",
+					x: 0,
+					y: 0,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+				{
+					id: "",
+					x: 1,
+					y: 0,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.MARKED,
+				},
+			],
+			[
+				{
+					id: "",
+					x: 0,
+					y: 1,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+				{
+					id: "",
+					x: 1,
+					y: 1,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+			],
+		]
+
 		// position for checking
 		const position = { x: 1, y: 0 }
 
-		// check the tile is marked
-		expect(isMarked(board, position)).toBe(true)
+		// mark tile
+		board = markTile(board, position)
+
+		// check the tile is still not marked
+		expect(board).toEqual(expectedBoard)
+	})
+
+	test("was NOT marked", () => {
+		// create board
+		const boardSize = 2
+		let board: Board = [
+			[
+				{
+					id: "",
+					x: 0,
+					y: 0,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+				{
+					id: "",
+					x: 1,
+					y: 0,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+			],
+			[
+				{
+					id: "",
+					x: 0,
+					y: 1,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+				{
+					id: "",
+					x: 1,
+					y: 1,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+			],
+		]
+
+		const expectedBoard: Board = [
+			[
+				{
+					id: "",
+					x: 0,
+					y: 0,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+				{
+					id: "",
+					x: 1,
+					y: 0,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.MARKED,
+				},
+			],
+			[
+				{
+					id: "",
+					x: 0,
+					y: 1,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+				{
+					id: "",
+					x: 1,
+					y: 1,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
+				},
+			],
+		]
+
+		// position for checking
+		const position = { x: 1, y: 0 }
+
+		// mark tile
+		board = markTile(board, position)
+
+		// check the tile is still not marked
+		expect(board).toEqual(expectedBoard)
 	})
 })

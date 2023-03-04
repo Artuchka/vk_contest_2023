@@ -1,6 +1,6 @@
-import { TILE_STATUS } from "../../store/features/game/gameSlice"
-import { Board } from "../../types/game"
-import { countOpenedTiles } from "../../utils/gameLogic/isWin"
+import { TILE_STATUS } from "../../../store/features/game/gameSlice"
+import { Board } from "../../../types/game"
+import { countOpenedTiles } from "../../../utils/gameLogic/isWin"
 
 describe("#countOpenedTiles", () => {
 	test("all closed", () => {
