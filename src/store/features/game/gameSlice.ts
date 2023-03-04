@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../store"
 import { Board, Position, TileStatus } from "../../../types/game"
+import { createTiles } from "../../../utils/gameLogic/createTiles"
+import { createMines } from "../../../utils/gameLogic/createMines"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
 	HIDDEN: "hidden",
@@ -41,10 +43,26 @@ export const gameSlice = createSlice({
 	name: "game",
 	// `createSlice` will infer the state type from the `initialState` argument
 	initialState,
-	reducers: {},
+	reducers: {
+		createBoard(
+			state,
+			action: PayloadAction<{ boardSize: number; minesLeft: number }>
+		) {
+			const { boardSize, minesLeft } = action.payload
+			let board = []
+
+			board = createTiles(boardSize)
+			board = createMines(board, boardSize, minesLeft)
+
+			state.board = board
+			state.boardSize = boardSize
+			state.minesLeft = minesLeft
+			state.gameStatus = "idle"
+		},
+	},
 })
 
-export const {} = gameSlice.actions
+export const { createBoard } = gameSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectGame = (state: RootState) => state.game
