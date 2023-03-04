@@ -1,8 +1,8 @@
-import { MINE_FLAG } from "../../store/features/game/gameSlice"
-import { Board, Cell, Position } from "../../types/game"
-import { addElement } from "../arrayMethods"
-import { randomNumber } from "../randomNumber"
-import { positionSame } from "./position/positionSame"
+import { MINE_FLAG } from "../../../store/features/game/gameSlice"
+import { Board, Cell, Position } from "../../../types/game"
+import { addElement } from "../../arrayMethods"
+import { randomNumber } from "../../randomNumber"
+import { positionSame } from "../position/positionSame"
 import { replaceTile } from "./replaceTile"
 
 export function createMines(

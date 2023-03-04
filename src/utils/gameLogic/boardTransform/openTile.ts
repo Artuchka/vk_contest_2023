@@ -1,9 +1,7 @@
-import { TILE_STATUS } from "../../store/features/game/gameSlice"
-import { Board, Cell, Position } from "../../types/game"
-import { countMinesAround } from "./countMinesAround"
+import { Board, Position } from "../../../types/game"
+import { isMarked, isMine, isOpened } from "../position/positionCheckers"
+import { positionPossible } from "../position/positionPossible"
 import { openCertainTile } from "./openCertainTile"
-import { isMarked, isMine, isOpened } from "./position/positionCheckers"
-import { positionPossible } from "./position/positionPossible"
 import { replaceTile } from "./replaceTile"
 
 export function openAdjacentTiles(

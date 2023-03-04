@@ -2,22 +2,21 @@ import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../../store"
 import { Board, Position, TileStatus } from "../../../types/game"
-import { createTiles } from "../../../utils/gameLogic/createTiles"
-import { createMines } from "../../../utils/gameLogic/createMines"
-import { openAdjacentTiles } from "../../../utils/gameLogic/openTile"
+import { createMines } from "../../../utils/gameLogic/boardTransform/createMines"
 import {
 	isMarked,
 	isMine,
 	isOpened,
 	isQuestioned,
 } from "../../../utils/gameLogic/position/positionCheckers"
-import { openAllTiles } from "../../../utils/gameLogic/openAllTiles"
-import { unmarkTile } from "../../../utils/gameLogic/mark/unmarkTiles"
-import { markTile } from "../../../utils/gameLogic/mark/markTile"
 import { positionSame } from "../../../utils/gameLogic/position/positionSame"
-import { questionTile } from "../../../utils/gameLogic/mark/questionTile"
 import { isWin } from "../../../utils/gameLogic/isWin"
-import { openAllMines } from "../../../utils/gameLogic/openAllMines"
+import { createTiles } from "../../../utils/gameLogic/boardTransform/createTiles"
+import { openAdjacentTiles } from "../../../utils/gameLogic/boardTransform/openTile"
+import { openAllMines } from "../../../utils/gameLogic/boardTransform/openAllMines"
+import { unmarkTile } from "../../../utils/gameLogic/boardTransform/mark/unmarkTiles"
+import { questionTile } from "../../../utils/gameLogic/boardTransform/mark/questionTile"
+import { markTile } from "../../../utils/gameLogic/boardTransform/mark/markTile"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
 	HIDDEN: "hidden",
@@ -90,8 +89,6 @@ export const gameSlice = createSlice({
 					(item) => !positionSame(item, position)
 				)
 			} else if (isMarked(state.board, position)) {
-				console.log("doing quest")
-
 				state.board = questionTile(state.board, position)
 			} else if (
 				!isOpened(state.board, position) &&
@@ -141,6 +138,8 @@ export const gameSlice = createSlice({
 				state.holdingCell = null
 				return state
 			}
+
+			state.holdingCell = null
 
 			// opening cell
 			state.gameStatus = "playing"

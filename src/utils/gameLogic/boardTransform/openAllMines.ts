@@ -1,5 +1,5 @@
-import { MINE_FLAG, TILE_STATUS } from "../../store/features/game/gameSlice"
-import { Board } from "../../types/game"
+import { MINE_FLAG, TILE_STATUS } from "../../../store/features/game/gameSlice"
+import { Board } from "../../../types/game"
 import { openCertainTile } from "./openCertainTile"
 import { replaceTile } from "./replaceTile"
 
