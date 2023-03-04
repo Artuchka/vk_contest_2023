@@ -7,17 +7,21 @@ import { Digit } from "../Digit"
 
 type PropType = { number: string }
 
-export const DigitScreen: FC<PropType> = memo(({ number }) => {
-	const digits = getDigits(parseInt(number) % 1000)
+export const DigitScreen: FC<PropType> = memo(
+	({ number }) => {
+		const digits = getDigits(parseInt(number) % 1000)
 
-	return (
-		<div className={style.wrapper} data-cy="digitScreen">
-			<Digit number={digits[0]} />
-			<Digit number={digits[1]} />
-			<Digit number={digits[2]} />
-		</div>
-	)
-}, digitScreenPropsAreEqual)
+		return (
+			<div className={style.wrapper} data-cy="digitScreen">
+				<Digit number={digits[0]} />
+				<Digit number={digits[1]} />
+				<Digit number={digits[2]} />
+			</div>
+		)
+	},
+
+	digitScreenPropsAreEqual
+)
 
 function digitScreenPropsAreEqual(
 	prevdigitScreen: PropType,
