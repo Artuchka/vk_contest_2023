@@ -1,0 +1,33 @@
+.wrapper {
+	width: 1rem;
+	height: 1.8rem;
+	background-size: cover;
+
+	&.image0 {
+		background-image: url("./../../assets/images/digits/0.png");
+	}
+	&.image1 {
+		background-image: url("./../../assets/images/digits/1.png");
+	}
+	&.image2 {
+		background-image: url("./../../assets/images/digits/2.png");
+	}
+	&.image3 {
+		background-image: url("./../../assets/images/digits/3.png");
+	}
+	&.image4 {
+		background-image: url("./../../assets/images/digits/4.png");
+	}
+	&.image5 {
+		background-image: url("./../../assets/images/digits/5.png");
+	}
+	&.image6 {
+		background-image: url("./../../assets/images/digits/6.png");
+	}
+	&.image7 {
+		background-image: url("./../../assets/images/digits/7.png");
+	}
+	&.image8 {
+		background-image: url("./../../assets/images/digits/8.png");
+	}
+}

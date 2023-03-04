@@ -39,7 +39,6 @@ interface GameState {
 	markedCells: Position[]
 	gameStatus: GameStatus
 	secondsPassed: number
-	minesMarked: number
 }
 
 // Define the initial state using that type
@@ -47,7 +46,6 @@ const initialState: GameState = {
 	board: [],
 	boardSize: 0,
 	minesLeft: 0,
-	minesMarked: 0,
 	secondsPassed: 0,
 	openedCells: [],
 	markedCells: [],
