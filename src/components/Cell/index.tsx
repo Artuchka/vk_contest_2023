@@ -12,16 +12,17 @@ import { positionSame } from "../../utils/gameLogic/position/positionSame"
 
 export const Cell: FC<CellType> = (props) => {
 	const { id, x, y, adjacentMinesCount, status } = props
-	const { openedCells, markedCells } = useSelector(selectGame)
+	const { openedCells, markedCells, gameStatus } = useSelector(selectGame)
 	const dispatch = useAppDispatch()
 
 	const handleOpen = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
-		if (status === "marked") return
+		if (status === "marked" || gameStatus === "over") return
 		dispatch(openCell({ x, y }))
 	}
 	const handleMark = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
+		if (gameStatus === "over") return
 		dispatch(markCell({ x, y }))
 	}
 

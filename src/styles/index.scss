@@ -4,4 +4,20 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+
+	--small-border: 0.3rem;
+	--big-border: 0.5rem;
+
+	--semi-gray: #bdbdbd;
+	--dark-gray: #7b7b7b;
+	--light-gray: white;
+}
+
+.App {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+
+	background-color: lightblue;
 }

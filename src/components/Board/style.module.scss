@@ -1,4 +1,22 @@
-.wrapper {
+.middleWrapper {
+	border: var(--big-border) solid var(--semi-gray);
+}
+
+.outerWrapper {
+	border: var(--small-border) solid var(--dark-gray);
+
+	border-left-color: var(--light-gray);
+	border-top-color: var(--light-gray);
+}
+
+.innerWrapper {
+	border: var(--small-border) solid var(--dark-gray);
+
+	border-right-color: var(--light-gray);
+	border-bottom-color: var(--light-gray);
+}
+
+.board {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	grid-template-rows: repeat(5, 1fr);

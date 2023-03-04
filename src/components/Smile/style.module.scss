@@ -1,0 +1,19 @@
+.wrapper {
+	background-size: cover;
+	background-image: url("./../../assets/images/smile/happy.png");
+	width: 2rem;
+	height: 2rem;
+
+	&.idle {
+		background-image: url("./../../assets/images/smile/happy.png");
+		&:active {
+			background-image: url("./../../assets/images/smile/happy_clicked.png");
+		}
+	}
+	&.over {
+		background-image: url("./../../assets/images/smile/dead.png");
+	}
+	&.win {
+		background-image: url("./../../assets/images/smile/win.png");
+	}
+}
