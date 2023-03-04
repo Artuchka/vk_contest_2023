@@ -1,7 +1,11 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import style from "./style.module.scss"
 import { useSelector } from "react-redux"
-import { createBoard, selectGame } from "../../store/features/game/gameSlice"
+import {
+	addSecond,
+	createBoard,
+	selectGame,
+} from "../../store/features/game/gameSlice"
 import { Cell } from "../Cell"
 import { useAppDispatch } from "../../store/store"
 import { Header } from "../Header"
@@ -14,7 +18,28 @@ export const Board = () => {
 		dispatch(createBoard({ boardSize: 5, minesLeft: 4 }))
 	}, [])
 
-	console.log({ board })
+	const intervalref = useRef<number | null>(null)
+
+	const startInterval = () => {
+		if (intervalref.current !== null) return
+		intervalref.current = window.setInterval(() => {
+			dispatch(addSecond())
+		}, 1000)
+	}
+
+	// Use the useEffect hook to cleanup the interval when the component unmounts
+	useEffect(() => {
+		if (gameStatus === "playing") {
+			startInterval()
+		}
+
+		// here's the cleanup function
+		return () => {
+			if (intervalref.current !== null) {
+				window.clearInterval(intervalref.current)
+			}
+		}
+	}, [gameStatus])
 
 	return (
 		<div className={style.outerWrapper}>

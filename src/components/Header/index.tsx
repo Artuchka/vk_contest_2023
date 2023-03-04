@@ -6,11 +6,11 @@ import { useSelector } from "react-redux"
 import { selectGame } from "../../store/features/game/gameSlice"
 
 export const Header = () => {
-	const { secondsPassed, minesLeft } = useSelector(selectGame)
+	const { secondsPassed, markedCells, minesLeft } = useSelector(selectGame)
 
 	return (
 		<div className={style.wrapper}>
-			<DigitScreen number={minesLeft} />
+			<DigitScreen number={minesLeft - markedCells.length} />
 			<Smile />
 			<DigitScreen number={secondsPassed} />
 		</div>

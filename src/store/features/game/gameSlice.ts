@@ -16,6 +16,7 @@ import { unmarkTile } from "../../../utils/gameLogic/mark/unmarkTiles"
 import { markTile } from "../../../utils/gameLogic/mark/markTile"
 import { positionSame } from "../../../utils/gameLogic/position/positionSame"
 import { questionTile } from "../../../utils/gameLogic/mark/questionTile"
+import { isWin } from "../../../utils/gameLogic/isWin"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
 	HIDDEN: "hidden",
@@ -77,6 +78,7 @@ export const gameSlice = createSlice({
 			if (state.gameStatus === "over" || state.gameStatus === "win") {
 				return state
 			}
+			state.gameStatus = "playing"
 
 			const { x, y } = action.payload
 
@@ -107,12 +109,8 @@ export const gameSlice = createSlice({
 			)
 			state.board = board
 			state.openedCells.push({ x, y })
-			state.gameStatus = "playing"
 
-			const hasWon =
-				state.boardSize - state.openedCells.length === state.minesLeft
-
-			if (hasWon) {
+			if (isWin(state.board, state.boardSize, state.minesLeft)) {
 				state.gameStatus = "win"
 			}
 		},
@@ -121,6 +119,7 @@ export const gameSlice = createSlice({
 			if (state.gameStatus === "over" || state.gameStatus === "win") {
 				return state
 			}
+			state.gameStatus = "playing"
 
 			const position = action.payload
 			if (isQuestioned(state.board, position)) {
@@ -132,15 +131,22 @@ export const gameSlice = createSlice({
 				console.log("doing quest")
 
 				state.board = questionTile(state.board, position)
-			} else if (!isOpened(state.board, position)) {
+			} else if (
+				!isOpened(state.board, position) &&
+				state.markedCells.length < state.minesLeft
+			) {
 				state.board = markTile(state.board, position)
 				state.markedCells.push(position)
 			}
 		},
+
+		addSecond(state) {
+			state.secondsPassed += 1
+		},
 	},
 })
 
-export const { createBoard, openCell, markCell } = gameSlice.actions
+export const { createBoard, openCell, markCell, addSecond } = gameSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectGame = (state: RootState) => state.game
