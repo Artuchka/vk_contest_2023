@@ -3,7 +3,8 @@ import style from "./style.module.scss"
 import { useSelector } from "react-redux"
 import {
 	markCell,
-	openCell,
+	onCellMouseDown,
+	onCellMouseUp,
 	selectGame,
 } from "../../store/features/game/gameSlice"
 import { Cell as CellType } from "../../types/game"
@@ -15,11 +16,25 @@ export const Cell: FC<CellType> = (props) => {
 	const { openedCells, markedCells, gameStatus } = useSelector(selectGame)
 	const dispatch = useAppDispatch()
 
-	const handleOpen = (e: MouseEvent<HTMLDivElement>) => {
+	// const handleOpen = (e: MouseEvent<HTMLDivElement>) => {
+	// 	e.preventDefault()
+	// 	if (status === "marked") return
+	// 	dispatch(openCell({ x, y }))
+	// }
+	const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
-		if (status === "marked") return
-		dispatch(openCell({ x, y }))
+		console.log({ x, y })
+		console.log(e)
+		dispatch(onCellMouseDown({ x, y }))
 	}
+	const handleMouseUp = (e: MouseEvent<HTMLDivElement>) => {
+		e.preventDefault()
+		console.log(e)
+		console.log({ x, y })
+
+		dispatch(onCellMouseUp({ x, y }))
+	}
+
 	const handleMark = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
 		dispatch(markCell({ x, y }))
@@ -30,6 +45,7 @@ export const Cell: FC<CellType> = (props) => {
 	return (
 		<div
 			className={`${style.wrapper} 
+			${status === "hidden" ? style.hidden : ""}
 			${
 				status === "opened"
 					? `${style.opened} ${
@@ -49,7 +65,9 @@ export const Cell: FC<CellType> = (props) => {
 			${status === "question" ? style.question : ""}
 
 			`}
-			onClick={handleOpen}
+			// onClick={handleOpen}
+			onMouseDown={handleMouseDown}
+			onMouseUp={handleMouseUp}
 			onContextMenu={handleMark}
 		></div>
 	)

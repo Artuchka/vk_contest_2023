@@ -17,6 +17,7 @@ import { markTile } from "../../../utils/gameLogic/mark/markTile"
 import { positionSame } from "../../../utils/gameLogic/position/positionSame"
 import { questionTile } from "../../../utils/gameLogic/mark/questionTile"
 import { isWin } from "../../../utils/gameLogic/isWin"
+import { openAllMines } from "../../../utils/gameLogic/openAllMines"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
 	HIDDEN: "hidden",
@@ -40,6 +41,7 @@ interface GameState {
 	markedCells: Position[]
 	gameStatus: GameStatus
 	secondsPassed: number
+	holdingCell: Position | null
 }
 
 // Define the initial state using that type
@@ -51,6 +53,7 @@ const initialState: GameState = {
 	openedCells: [],
 	markedCells: [],
 	gameStatus: "idle",
+	holdingCell: null,
 }
 
 export const gameSlice = createSlice({
@@ -74,48 +77,7 @@ export const gameSlice = createSlice({
 			state.gameStatus = "idle"
 		},
 
-		openCell(state, action: PayloadAction<{ x: number; y: number }>) {
-			if (state.gameStatus === "over" || state.gameStatus === "win") {
-				return state
-			}
-			state.gameStatus = "playing"
-
-			const { x, y } = action.payload
-
-			const clickedOnMine = isMine(state.board, { x, y })
-			const isFirstClick = state.openedCells.length === 0
-			console.log({ isFirstClick, clickedOnMine })
-
-			if (isFirstClick && clickedOnMine) {
-				let board = []
-
-				board = createTiles(state.boardSize)
-				board = createMines(board, state.boardSize, state.minesLeft, [
-					{ x, y },
-				])
-
-				state.board = board
-			} else if (!isFirstClick && clickedOnMine) {
-				state.board = openAllTiles(state.board)
-				state.openedCells.push({ x, y })
-				state.gameStatus = "over"
-				return state
-			}
-
-			const board = openAdjacentTiles(
-				state.board,
-				{ x, y },
-				state.boardSize
-			)
-			state.board = board
-			state.openedCells.push({ x, y })
-
-			if (isWin(state.board, state.boardSize, state.minesLeft)) {
-				state.gameStatus = "win"
-			}
-		},
-
-		markCell(state, action: PayloadAction<{ x: number; y: number }>) {
+		markCell(state, action: PayloadAction<Position>) {
 			if (state.gameStatus === "over" || state.gameStatus === "win") {
 				return state
 			}
@@ -156,11 +118,76 @@ export const gameSlice = createSlice({
 		addSecond(state) {
 			state.secondsPassed += 1
 		},
+		onCellMouseDown(state, action: PayloadAction<Position>) {
+			if (state.gameStatus === "over" || state.gameStatus === "win") {
+				return state
+			}
+			state.holdingCell = action.payload
+		},
+		onCellMouseUp(state, action: PayloadAction<Position>) {
+			if (state.gameStatus === "over" || state.gameStatus === "win") {
+				return state
+			}
+			if (
+				!(
+					state.holdingCell &&
+					positionSame(state.holdingCell, action.payload)
+				)
+			) {
+				// havent held cell OR mouse upped on other cell than one which was held
+				state.holdingCell = null
+				return state
+			}
+
+			// opening cell
+			state.gameStatus = "playing"
+
+			const { x, y } = action.payload
+
+			const clickedOnMine = isMine(state.board, { x, y })
+			const isFirstClick = state.openedCells.length === 0
+			console.log({ isFirstClick, clickedOnMine })
+
+			if (isFirstClick && clickedOnMine) {
+				let board = []
+
+				board = createTiles(state.boardSize)
+				board = createMines(board, state.boardSize, state.minesLeft, [
+					{ x, y },
+				])
+
+				state.board = board
+			} else if (!isFirstClick && clickedOnMine) {
+				// state.board = openAllTiles(state.board)
+				state.board = openAllMines(state.board)
+				state.openedCells.push({ x, y })
+				state.gameStatus = "over"
+				return state
+			}
+
+			const board = openAdjacentTiles(
+				state.board,
+				{ x, y },
+				state.boardSize
+			)
+			state.board = board
+			state.openedCells.push({ x, y })
+
+			if (isWin(state.board, state.boardSize, state.minesLeft)) {
+				state.gameStatus = "win"
+			}
+		},
 	},
 })
 
-export const { createBoard, openCell, markCell, addSecond, restartGame } =
-	gameSlice.actions
+export const {
+	createBoard,
+	markCell,
+	addSecond,
+	restartGame,
+	onCellMouseUp,
+	onCellMouseDown,
+} = gameSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectGame = (state: RootState) => state.game
