@@ -51,7 +51,13 @@ export const Board = () => {
 				<div className={`${style.innerWrapper}`}>
 					<Header />
 				</div>
-				<div className={`${style.innerWrapper} ${style.board}`}>
+				<div
+					className={`${style.innerWrapper} ${style.board} ${
+						gameStatus === "win" || gameStatus === "over"
+							? style.disabled
+							: ""
+					}`}
+				>
 					{board.flat().map((item) => {
 						return <Cell key={item.id} {...item} />
 					})}
