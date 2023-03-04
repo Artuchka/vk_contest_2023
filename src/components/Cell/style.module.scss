@@ -1,2 +1,52 @@
 .wrapper {
+	width: 2rem;
+	height: 2rem;
+	background-color: gray;
+	border: none;
+	outline: transparent;
+
+	background-size: contain;
+	background-image: url("./../../assets/images/hidden_cell.png");
+
+	&:not(.opened, .mine, .marked) {
+		&:active {
+			background-image: url("./../../assets/images/hidden_cell_clicked.png");
+		}
+	}
+
+	&.opened {
+		&.image0 {
+			background-image: url("./../../assets/images/hidden_cell_clicked.png");
+		}
+		&.image1 {
+			background-image: url("./../../assets/images/mines_count/1.png");
+		}
+		&.image2 {
+			background-image: url("./../../assets/images/mines_count/2.png");
+		}
+		&.image3 {
+			background-image: url("./../../assets/images/mines_count/3.png");
+		}
+		&.image4 {
+			background-image: url("./../../assets/images/mines_count/4.png");
+		}
+		&.image5 {
+			background-image: url("./../../assets/images/mines_count/5.png");
+		}
+		&.image6 {
+			background-image: url("./../../assets/images/mines_count/6.png");
+		}
+		&.image7 {
+			background-image: url("./../../assets/images/mines_count/7.png");
+		}
+		&.image8 {
+			background-image: url("./../../assets/images/mines_count/8.png");
+		}
+	}
+	&.marked {
+		background-color: yellow;
+	}
+	&.mine {
+		background-color: red;
+	}
 }
