@@ -14,8 +14,12 @@ cd vk_contest_2023
 npm install
 ```
 
-⏱️time spent⏱️: 
+### ⏱️Time Spent⏱️: 
 
-I've started at 12:30 pm
+I've started at 12:30 pm\
 Ending right at 21:00 pm
-Man, I haven't eaten all day and feel sooo good (jokes aside) 
+
+Man, I haven't eaten all day and I'll eat 2.5 shawarma rn, jokes aside, I feel sooo good.\
+❤️‍🔥Loved❤️‍🔥 doing the project in one single day.
+
+(p.s. ❤️‍🔥 looks like mango or some fruit idk, right? xd)
