@@ -19,6 +19,9 @@ export const Cell: FC<CellType> = (props) => {
 	const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
 
+		// i think there should be click possible on  `status ==='question'`
+		if (status === "marked") return
+
 		if (e.button === 0) {
 			dispatch(onCellMouseDown({ x, y }))
 		}
@@ -26,6 +29,7 @@ export const Cell: FC<CellType> = (props) => {
 	const handleMouseUp = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
 
+		if (status === "marked") return
 		if (e.button === 0) {
 			dispatch(onCellMouseUp({ x, y }))
 		}

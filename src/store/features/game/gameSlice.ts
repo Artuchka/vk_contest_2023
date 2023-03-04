@@ -121,6 +121,7 @@ export const gameSlice = createSlice({
 			if (state.gameStatus === "over" || state.gameStatus === "win") {
 				return state
 			}
+
 			state.holdingCell = action.payload
 		},
 
