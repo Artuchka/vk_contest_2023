@@ -4,7 +4,7 @@ import { RootState } from "../../store"
 import { Board, Position, TileStatus } from "../../../types/game"
 import { createTiles } from "../../../utils/gameLogic/createTiles"
 import { createMines } from "../../../utils/gameLogic/createMines"
-import { openTile } from "../../../utils/gameLogic/openTile"
+import { openAdjacentTiles } from "../../../utils/gameLogic/openTile"
 import { isMine } from "../../../utils/gameLogic/position/positionCheckers"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
@@ -77,13 +77,17 @@ export const gameSlice = createSlice({
 				])
 
 				state.board = board
-			} else if (clickedOnMine) {
+			} else if (!isFirstClick && clickedOnMine) {
 				// state.board = openAllTiles(state.board)
 				// state.gameStatus = "over"
 				// return state
 			}
 
-			const board = openTile(state.board, { x, y }, state.boardSize)
+			const board = openAdjacentTiles(
+				state.board,
+				{ x, y },
+				state.boardSize
+			)
 			state.board = board
 			state.openedCells.push({ x, y })
 			state.gameStatus = "playing"

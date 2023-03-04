@@ -1,12 +1,16 @@
 import { TILE_STATUS } from "../../store/features/game/gameSlice"
 import { Board, Cell, Position } from "../../types/game"
 import { countMinesAround } from "./countMinesAround"
+import { openCertainTile } from "./openCertainTile"
 import { isMarked, isMine, isOpened } from "./position/positionCheckers"
 import { positionPossible } from "./position/positionPossible"
 import { replaceTile } from "./replaceTile"
 
-// should be called smth like "openAdjacentTiles"
-export function openTile(board: Board, position: Position, boardSize: number) {
+export function openAdjacentTiles(
+	board: Board,
+	position: Position,
+	boardSize: number
+) {
 	if (
 		isOpened(board, position) ||
 		isMarked(board, position) ||
@@ -29,25 +33,9 @@ export function openTile(board: Board, position: Position, boardSize: number) {
 		const nextPosition = { x: newX, y: newY }
 
 		if (positionPossible(nextPosition, boardSize)) {
-			newBoard = openTile(newBoard, nextPosition, boardSize)
+			newBoard = openAdjacentTiles(newBoard, nextPosition, boardSize)
 		}
 	})
 
 	return newBoard
-}
-
-export function openCertainTile(
-	board: Board,
-	position: Position,
-	boardSize: number
-) {
-	let newBoard = board
-
-	const newTile: Cell = {
-		...newBoard[position.y][position.x],
-		adjacentMinesCount: countMinesAround(board, position, boardSize),
-		status: TILE_STATUS.OPENED,
-	}
-
-	return replaceTile(newBoard, position, newTile)
 }
