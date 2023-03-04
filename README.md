@@ -36,7 +36,7 @@ npm run test:e2e
 ### ⏱️Time Spent⏱️:
 
 I've started at 12:30 pm\
-Ending right at 21:00 pm
+Ending right at 22:00 pm
 
 Man, I haven't eaten all day and I'll eat 2.5 shawarma rn, jokes aside, I feel sooo good.\
 ❤️‍🔥Loved❤️‍🔥 doing the project in one single day.
