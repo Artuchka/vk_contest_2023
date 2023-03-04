@@ -23,17 +23,20 @@ describe("overall test", () => {
 		const smile = screen.getByTestId(/smile_idle/)
 		expect(smile).toBeDefined()
 	})
+
 	it("should not be idle when clicked", async () => {
-		render(
+		const { container } = render(
 			<Provider store={store}>
 				<App />
 			</Provider>
 		)
-		const tile = await screen.getAllByTestId(/cell/)
-		userEvent.click(tile[0])
-		const smile = await screen.getByTestId(/smile_idle/)
-		console.log({ smile })
+		const tile = screen.getAllByTestId(/cell/)
+		await userEvent.click(tile[0])
 
-		// expect(smile).toBeUndefined()
+		expect(
+			container
+				.querySelectorAll('[data-testid*="cell"]')[0]
+				.classList.contains("opened")
+		).toBeFalsy()
 	})
 })
