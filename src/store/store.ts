@@ -6,8 +6,6 @@ export const store = configureStore({
 	reducer: {
 		game: gameReducer,
 	},
-	// uncomment for production
-	// devTools: false
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
