@@ -81,6 +81,7 @@ export const gameSlice = createSlice({
 				state.board = board
 			} else if (!isFirstClick && clickedOnMine) {
 				state.board = openAllTiles(state.board)
+				state.openedCells.push({ x, y })
 				state.gameStatus = "over"
 				return state
 			}

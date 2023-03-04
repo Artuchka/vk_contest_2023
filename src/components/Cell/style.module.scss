@@ -47,6 +47,12 @@
 		background-color: yellow;
 	}
 	&.mine {
-		background-color: red;
+		background-image: url("./../../assets/images/mines/mine_gray.png");
+		&.clicked {
+			background-image: url("./../../assets/images/mines/mine_red.png");
+		}
+		&.saved {
+			background-image: url("./../../assets/images/mines/mine_crossed.png");
+		}
 	}
 }
