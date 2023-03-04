@@ -2,11 +2,11 @@
 
 ## [🔗Live Demo🔗](https://vk-contest-2023.vercel.app/)
 
-
 ### 🚩Instructions🚩:
 
 ```bash
 git clone https://github.com/Artuchka/vk_contest_2023.git
+
 ```
 
 ```bash
@@ -17,7 +17,11 @@ cd vk_contest_2023
 npm install
 ```
 
-### ⏱️Time Spent⏱️: 
+```bash
+npm run dev
+```
+
+### ⏱️Time Spent⏱️:
 
 I've started at 12:30 pm\
 Ending right at 21:00 pm

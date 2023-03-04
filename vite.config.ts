@@ -15,5 +15,6 @@ export default defineConfig({
 		// since parsing CSS is slow
 		css: true,
 		setupFiles: "./src/test/setup.ts",
+		// include: ["./src/**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
 	},
 })

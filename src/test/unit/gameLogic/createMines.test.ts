@@ -8,13 +8,13 @@ describe("#createMines", () => {
 		it("first", () => {
 			// create board
 			const boardSize = 2
-			const exludePostitions = [
+			const excludePositions = [
 				{ x: 0, y: 0 },
 				{ x: 1, y: 0 },
 				{ x: 0, y: 1 },
 			]
 			let board: Board = createTiles(boardSize)
-			board = createMines(board, boardSize, 1, exludePostitions)
+			board = createMines(board, boardSize, 1, excludePositions)
 
 			const expectedBoard: Board = [
 				[
@@ -59,13 +59,13 @@ describe("#createMines", () => {
 		it("first", () => {
 			// create board
 			const boardSize = 2
-			const exludePostitions = [
+			const excludePositions = [
 				{ x: 0, y: 0 },
 				{ x: 1, y: 0 },
 				{ x: 1, y: 1 },
 			]
 			let board: Board = createTiles(boardSize)
-			board = createMines(board, boardSize, 1, exludePostitions)
+			board = createMines(board, boardSize, 1, excludePositions)
 
 			const expectedBoard: Board = [
 				[
@@ -113,12 +113,12 @@ describe("#createMines", () => {
 		it("first", () => {
 			// create board
 			const boardSize = 2
-			const exludePostitions = [
+			const excludePositions = [
 				{ x: 0, y: 0 },
 				{ x: 1, y: 0 },
 			]
 			let board: Board = createTiles(boardSize)
-			board = createMines(board, boardSize, 2, exludePostitions)
+			board = createMines(board, boardSize, 2, excludePositions)
 
 			const expectedBoard: Board = [
 				[
@@ -163,12 +163,12 @@ describe("#createMines", () => {
 		it("second", () => {
 			// create board
 			const boardSize = 2
-			const exludePostitions = [
+			const excludePositions = [
 				{ x: 0, y: 0 },
 				{ x: 1, y: 1 },
 			]
 			let board: Board = createTiles(boardSize)
-			board = createMines(board, boardSize, 2, exludePostitions)
+			board = createMines(board, boardSize, 2, excludePositions)
 
 			const expectedBoard: Board = [
 				[
