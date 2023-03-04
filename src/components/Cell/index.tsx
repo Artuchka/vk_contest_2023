@@ -16,8 +16,6 @@ export const Cell: FC<CellType> = memo((props) => {
 		props
 	const dispatch = useAppDispatch()
 
-	console.log({ id })
-
 	const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
 
