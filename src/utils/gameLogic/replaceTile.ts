@@ -1,5 +1,5 @@
 import { Board, Cell, Position } from "../../types/game"
-import { positionSame } from "./positionSame"
+import { positionSame } from "./position/positionSame"
 
 export function replaceTile(board: Board, position: Position, newCell: Cell) {
 	return board.map((row, y) => {

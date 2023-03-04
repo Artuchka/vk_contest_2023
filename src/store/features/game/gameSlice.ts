@@ -4,6 +4,7 @@ import { RootState } from "../../store"
 import { Board, Position, TileStatus } from "../../../types/game"
 import { createTiles } from "../../../utils/gameLogic/createTiles"
 import { createMines } from "../../../utils/gameLogic/createMines"
+import { openTile } from "../../../utils/gameLogic/openTile"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
 	HIDDEN: "hidden",
@@ -59,10 +60,26 @@ export const gameSlice = createSlice({
 			state.minesLeft = minesLeft
 			state.gameStatus = "idle"
 		},
+
+		openCell(state, action: PayloadAction<{ x: number; y: number }>) {
+			const { x, y } = action.payload
+
+			const board = openTile(state.board, { x, y }, state.boardSize)
+			state.board = board
+			state.openedCells.push({ x, y })
+			state.gameStatus = "playing"
+
+			const hasWon =
+				state.boardSize - state.openedCells.length === state.minesLeft
+
+			if (hasWon) {
+				state.gameStatus = "win"
+			}
+		},
 	},
 })
 
-export const { createBoard } = gameSlice.actions
+export const { createBoard, openCell } = gameSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectGame = (state: RootState) => state.game
