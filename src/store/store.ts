@@ -2,10 +2,6 @@ import { configureStore } from "@reduxjs/toolkit"
 import gameReducer from "./features/game/gameSlice"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 
-const { REACT_APP_NODE_ENV } = process.env
-
-let opt = { devTools: true }
-
 export const store = configureStore({
 	reducer: {
 		game: gameReducer,
