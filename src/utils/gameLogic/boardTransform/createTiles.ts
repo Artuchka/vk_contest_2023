@@ -1,13 +1,13 @@
 import times from "lodash.times"
-import { Board } from "../../../types/game"
+import { Board, Cell } from "../../../types/game"
 import { TILE_STATUS } from "../../../store/features/game/gameSlice"
 
 export function createTiles(boardSize: number) {
 	const newBoard: Board = []
 
 	// FP style of looping
-	return times(boardSize, (y) => {
-		return times(boardSize, (x) => {
+	return times<Cell[]>(boardSize, (y) => {
+		return times<Cell>(boardSize, (x) => {
 			return {
 				id: crypto.randomUUID(),
 				x,
