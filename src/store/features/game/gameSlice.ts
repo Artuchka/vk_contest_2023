@@ -5,8 +5,15 @@ import { Board, Position, TileStatus } from "../../../types/game"
 import { createTiles } from "../../../utils/gameLogic/createTiles"
 import { createMines } from "../../../utils/gameLogic/createMines"
 import { openAdjacentTiles } from "../../../utils/gameLogic/openTile"
-import { isMine } from "../../../utils/gameLogic/position/positionCheckers"
+import {
+	isMarked,
+	isMine,
+	isOpened,
+} from "../../../utils/gameLogic/position/positionCheckers"
 import { openAllTiles } from "../../../utils/gameLogic/openAllTiles"
+import { unmarkTile } from "../../../utils/gameLogic/mark/unmarkTiles"
+import { markTile } from "../../../utils/gameLogic/mark/markTile"
+import { positionSame } from "../../../utils/gameLogic/position/positionSame"
 
 export const TILE_STATUS: Record<string, TileStatus> = {
 	HIDDEN: "hidden",
@@ -26,6 +33,7 @@ interface GameState {
 	minesLeft: number
 	// openedCells are cells which user clicked on, not just every auto opened cell
 	openedCells: Position[]
+	markedCells: Position[]
 	gameStatus: GameStatus
 	secondsPassed: number
 	minesMarked: number
@@ -39,6 +47,7 @@ const initialState: GameState = {
 	minesMarked: 0,
 	secondsPassed: 0,
 	openedCells: [],
+	markedCells: [],
 	gameStatus: "idle",
 }
 
@@ -102,10 +111,23 @@ export const gameSlice = createSlice({
 				state.gameStatus = "win"
 			}
 		},
+
+		markCell(state, action: PayloadAction<{ x: number; y: number }>) {
+			const position = action.payload
+			if (isMarked(state.board, position)) {
+				state.board = unmarkTile(state.board, position)
+				state.markedCells = state.markedCells.filter(
+					(item) => !positionSame(item, position)
+				)
+			} else if (!isOpened(state.board, position)) {
+				state.board = markTile(state.board, position)
+				state.markedCells.push(position)
+			}
+		},
 	},
 })
 
-export const { createBoard, openCell } = gameSlice.actions
+export const { createBoard, openCell, markCell } = gameSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectGame = (state: RootState) => state.game

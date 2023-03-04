@@ -1,14 +1,18 @@
 import React, { FC, MouseEvent } from "react"
 import style from "./style.module.scss"
 import { useSelector } from "react-redux"
-import { openCell, selectGame } from "../../store/features/game/gameSlice"
+import {
+	markCell,
+	openCell,
+	selectGame,
+} from "../../store/features/game/gameSlice"
 import { Cell as CellType } from "../../types/game"
 import { useAppDispatch } from "../../store/store"
 import { positionSame } from "../../utils/gameLogic/position/positionSame"
 
 export const Cell: FC<CellType> = (props) => {
 	const { id, x, y, adjacentMinesCount, status } = props
-	const { openedCells } = useSelector(selectGame)
+	const { openedCells, markedCells } = useSelector(selectGame)
 	const dispatch = useAppDispatch()
 
 	const handleOpen = (e: MouseEvent<HTMLDivElement>) => {
@@ -18,7 +22,14 @@ export const Cell: FC<CellType> = (props) => {
 	}
 	const handleMark = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
+		dispatch(markCell({ x, y }))
 	}
+
+	const isMarked = markedCells.some((item) => positionSame(item, { x, y }))
+	if (isMarked) {
+		console.log({ x, y })
+	}
+
 	return (
 		<div
 			className={`${style.wrapper} 
@@ -36,13 +47,7 @@ export const Cell: FC<CellType> = (props) => {
 					? style.clicked
 					: ""
 			}
-			${
-				// status === "mine" &&
-				// markedCells.includes({ x, y })
-				// 	? style.clicked
-				// 	: ""
-				""
-			}
+			${status === "mine" && isMarked ? style.saved : ""}
 			${status === "marked" ? style.marked : ""}
 
 			`}
