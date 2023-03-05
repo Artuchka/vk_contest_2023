@@ -133,7 +133,7 @@ export const gameSlice = createSlice({
 			// will result if haven't held cell OR mouse lifted up on cell other than one which was held first time
 			if (
 				!(
-					state.holdingCell &&
+					state.holdingCell !== null &&
 					positionSame(state.holdingCell, action.payload)
 				)
 			) {
@@ -201,6 +201,9 @@ export const gameSlice = createSlice({
 				state.gameStatus = "win"
 			}
 		},
+		resetHolding(state) {
+			state.holdingCell = null
+		},
 	},
 })
 
@@ -211,6 +214,7 @@ export const {
 	restartGame,
 	onCellMouseUp,
 	onCellMouseDown,
+	resetHolding,
 } = gameSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type

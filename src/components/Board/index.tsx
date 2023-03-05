@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from "react"
+import React, { MouseEvent, useEffect, useRef } from "react"
 import style from "./style.module.scss"
 import { useSelector } from "react-redux"
 import {
 	addSecond,
 	createBoard,
+	resetHolding,
 	selectGame,
 } from "../../store/features/game/gameSlice"
 import { Cell } from "../Cell"
@@ -49,6 +50,29 @@ export const Board = () => {
 		// cleanup function
 		return stopInterval
 	}, [gameStatus])
+
+	useEffect(() => {
+		const func = (e: any) => {
+			if (e.button === 0) {
+				const inside = Array.from(
+					(e.target as HTMLDivElement).classList
+				).some(
+					(item: string) =>
+						item.includes("hidden") ||
+						item.includes("opened") ||
+						item.includes("mine")
+				)
+				if (!inside) {
+					dispatch(resetHolding())
+				}
+			}
+		}
+		window.addEventListener("mouseup", func)
+
+		return () => {
+			window.removeEventListener("mouseup", func)
+		}
+	}, [])
 
 	return (
 		// this many wrappers only for borders

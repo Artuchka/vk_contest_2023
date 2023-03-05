@@ -1,10 +1,11 @@
-import React, { FC, MouseEvent, memo } from "react"
+import React, { FC, MouseEvent, memo, useEffect } from "react"
 import style from "./style.module.scss"
 import { useSelector } from "react-redux"
 import {
 	markCell,
 	onCellMouseDown,
 	onCellMouseUp,
+	resetHolding,
 	selectGame,
 } from "../../store/features/game/gameSlice"
 import { Cell as CellType } from "../../types/game"
@@ -20,7 +21,7 @@ export const Cell: FC<CellType> = memo((props) => {
 		e.preventDefault()
 
 		// i think there should be click possible on  `status ==='question'`
-		if (status === "marked") return
+		if (status === "marked" || status === "opened") return
 
 		// only if left-button mouse clicked
 		if (e.button === 0) {
@@ -30,7 +31,10 @@ export const Cell: FC<CellType> = memo((props) => {
 	const handleMouseUp = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault()
 
-		if (status === "marked") return
+		if (status === "marked" || status === "opened") {
+			dispatch(resetHolding())
+			return
+		}
 		if (e.button === 0) {
 			dispatch(onCellMouseUp({ x, y }))
 		}
