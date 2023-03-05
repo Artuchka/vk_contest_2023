@@ -4,7 +4,7 @@ import { DigitScreen } from "../../components/DigitScreen"
 
 describe("<DigitScreen />", () => {
 	it("number = 0", () => {
-		cy.mount(<DigitScreen number={0} />)
+		cy.mount(<DigitScreen number={"0"} />)
 		cy.get("[data-cy=digitScreen]")
 			.children()
 			.should("have.css", "background-image")
@@ -12,7 +12,7 @@ describe("<DigitScreen />", () => {
 	})
 
 	it("number = 1", () => {
-		cy.mount(<DigitScreen number={1} />)
+		cy.mount(<DigitScreen number={"1"} />)
 
 		cy.get("[data-cy=digitScreen] > :nth-child(1) ")
 			.should("have.css", "background-image")
@@ -26,7 +26,7 @@ describe("<DigitScreen />", () => {
 	})
 
 	it("number = 12", () => {
-		cy.mount(<DigitScreen number={12} />)
+		cy.mount(<DigitScreen number={"12"} />)
 
 		cy.get("[data-cy=digitScreen] > :nth-child(1) ")
 			.should("have.css", "background-image")
@@ -40,7 +40,7 @@ describe("<DigitScreen />", () => {
 	})
 
 	it("number = 123", () => {
-		cy.mount(<DigitScreen number={123} />)
+		cy.mount(<DigitScreen number={"123"} />)
 
 		cy.get("[data-cy=digitScreen] > :nth-child(1) ")
 			.should("have.css", "background-image")
@@ -53,7 +53,7 @@ describe("<DigitScreen />", () => {
 			.and("include", "3.png")
 	})
 	it("number = 1000", () => {
-		cy.mount(<DigitScreen number={1000} />)
+		cy.mount(<DigitScreen number={"1000"} />)
 
 		cy.get("[data-cy=digitScreen] > :nth-child(1) ")
 			.should("have.css", "background-image")
@@ -66,7 +66,7 @@ describe("<DigitScreen />", () => {
 			.and("include", "0.png")
 	})
 	it("number = 1123", () => {
-		cy.mount(<DigitScreen number={1123} />)
+		cy.mount(<DigitScreen number={"1123"} />)
 
 		cy.get("[data-cy=digitScreen] > :nth-child(1) ")
 			.should("have.css", "background-image")
