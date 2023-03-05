@@ -6,11 +6,14 @@
 	box-sizing: border-box;
 
 	--small-border: 0.3rem;
-	--big-border: 0.5rem;
+	--big-border: 0.6rem;
 
+	// --semi-gray: #c0c0c0;
+	// --dark-gray: #7b7b7b;
+	// --light-gray: white;
 	--semi-gray: #bdbdbd;
-	--dark-gray: #7b7b7b;
-	--light-gray: white;
+	--dark-gray: #a0a0a0;
+	--light-gray: #eeeeee;
 }
 
 .App {
@@ -19,7 +22,7 @@
 	align-items: center;
 	min-height: 100vh;
 
-	background-color: lightblue;
+	background-color: rgba(106, 135, 223, 0.622);
 }
 
 #preload {
