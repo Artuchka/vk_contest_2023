@@ -1,10 +1,9 @@
-import { MINE_FLAG, TILE_STATUS } from "../../../store/features/game/gameSlice"
-import { Board } from "../../../types/game"
-import { openAllTiles } from "../../../utils/gameLogic/boardTransform/openAllTiles"
-import { openAdjacentTiles } from "../../../utils/gameLogic/boardTransform/openTile"
+import { TILE_STATUS } from "../../../../store/features/game/gameSlice"
+import { Board } from "../../../../types/game"
+import { markTile } from "../../../../utils/gameLogic/boardTransform/mark/markTile"
 
-describe("#openAllTiles", () => {
-	test("correctly opens all tiles ", () => {
+describe("#markTile", () => {
+	test("was marked", () => {
 		// create board
 		const boardSize = 2
 		let board: Board = [
@@ -13,7 +12,7 @@ describe("#openAllTiles", () => {
 					id: "",
 					x: 0,
 					y: 0,
-					adjacentMinesCount: MINE_FLAG,
+					adjacentMinesCount: 0,
 					status: TILE_STATUS.HIDDEN,
 				},
 				{
@@ -21,7 +20,7 @@ describe("#openAllTiles", () => {
 					x: 1,
 					y: 0,
 					adjacentMinesCount: 0,
-					status: TILE_STATUS.HIDDEN,
+					status: TILE_STATUS.MARKED,
 				},
 			],
 			[
@@ -48,15 +47,16 @@ describe("#openAllTiles", () => {
 					id: "",
 					x: 0,
 					y: 0,
-					adjacentMinesCount: MINE_FLAG,
-					status: TILE_STATUS.MINE,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
 				},
 				{
 					id: "",
 					x: 1,
 					y: 0,
-					adjacentMinesCount: 1,
-					status: TILE_STATUS.OPENED,
+					adjacentMinesCount: 0,
+					isMarked: true,
+					status: TILE_STATUS.MARKED,
 				},
 			],
 			[
@@ -64,28 +64,30 @@ describe("#openAllTiles", () => {
 					id: "",
 					x: 0,
 					y: 1,
-					adjacentMinesCount: 1,
-					status: TILE_STATUS.OPENED,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
 				},
 				{
 					id: "",
 					x: 1,
 					y: 1,
-					adjacentMinesCount: 1,
-					status: TILE_STATUS.OPENED,
+					adjacentMinesCount: 0,
+					status: TILE_STATUS.HIDDEN,
 				},
 			],
 		]
 
-		board = openAllTiles(board)
+		// position for checking
+		const position = { x: 1, y: 0 }
 
-		// check boards are the same
+		// mark tile
+		board = markTile(board, position)
+
+		// check the tile is still not marked
 		expect(board).toEqual(expectedBoard)
 	})
-})
 
-describe("#openTile", () => {
-	test("correctly reveals tile & nearby ones ", () => {
+	test("was NOT marked", () => {
 		// create board
 		const boardSize = 2
 		let board: Board = [
@@ -94,7 +96,7 @@ describe("#openTile", () => {
 					id: "",
 					x: 0,
 					y: 0,
-					adjacentMinesCount: MINE_FLAG,
+					adjacentMinesCount: 0,
 					status: TILE_STATUS.HIDDEN,
 				},
 				{
@@ -122,11 +124,6 @@ describe("#openTile", () => {
 				},
 			],
 		]
-
-		// setting `click` position
-		const position = { x: 1, y: 0 }
-		// revealing tile
-		board = openAdjacentTiles(board, position, boardSize)
 
 		const expectedBoard: Board = [
 			[
@@ -134,15 +131,16 @@ describe("#openTile", () => {
 					id: "",
 					x: 0,
 					y: 0,
-					adjacentMinesCount: MINE_FLAG,
+					adjacentMinesCount: 0,
 					status: TILE_STATUS.HIDDEN,
 				},
 				{
 					id: "",
 					x: 1,
 					y: 0,
-					adjacentMinesCount: 1,
-					status: TILE_STATUS.OPENED,
+					adjacentMinesCount: 0,
+					isMarked: true,
+					status: TILE_STATUS.MARKED,
 				},
 			],
 			[
@@ -163,7 +161,13 @@ describe("#openTile", () => {
 			],
 		]
 
-		// check boards are the same
+		// position for checking
+		const position = { x: 1, y: 0 }
+
+		// mark tile
+		board = markTile(board, position)
+
+		// check the tile is still not marked
 		expect(board).toEqual(expectedBoard)
 	})
 })

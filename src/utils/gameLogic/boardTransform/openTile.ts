@@ -18,6 +18,10 @@ export function openAdjacentTiles(
 	}
 	let newBoard = openCertainTile(board, position, boardSize)
 
+	if (newBoard[position.y][position.x].adjacentMinesCount >= 1) {
+		return newBoard
+	}
+
 	// setting position offsets by hand so there are less calculations AND checked that they are only christ-alike
 	const dxdyPositions = [
 		{ dx: -1, dy: 0 },
