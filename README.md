@@ -63,3 +63,9 @@ DigitScreen\
 
 Board\
 ![image](https://user-images.githubusercontent.com/42734308/222925070-438dd53f-708c-4515-a3d4-b3fb00889598.png)
+
+
+Game Screenshots:
+
+![image](https://user-images.githubusercontent.com/42734308/222934947-6b480391-f40b-483e-aec7-c927b5af16c5.png)
+
